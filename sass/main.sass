@@ -1,0 +1,295 @@
+@import "fonts"
+@import "libs"
+@import "base"
+@import "vars"
+
+// Пользовательские стили
+.grid
+	display: grid
+
+
+/*-------------------------------------------------------------Первая секция---------------------------------------------------*/
+.main-header
+	min-height: 100vh // vh Этот пареметр говорит что .main-header занимает всю высоту экрана
+	background-size: cover // Этот пареметр не дает расползать фону, и задает четко на всю площадь экрана
+	background-position: center // background-size:cover не достаточно нужно еще и позицириновать картинку по центру
+	position: relative
+	align-content: center // центруем по вертикали
+	&::before
+		content: ''
+		position: absolute
+		top: 0
+		left: 0 //Эти значения необходимы чтоб наш before растягивался на всю ширину и на всю высоту
+		right: 0
+		bottom: 0
+		background-color: $dark 
+		opacity: .92 // полупрозрачность
+
+.header-content
+	z-index: 1	
+	color: #fff
+	text-align: center
+	padding: 60px $gutter //Паддинги вокруг текста (кнопки), $gutter=20px
+	h1
+		font-size: 60px
+		font-family: intro-grid, sans-serif 
+		font-weight: normal
+		margin: 20px 0 // задали margiны сверху и снизу по 20пк по бокам 0
+		line-height: 1.5
+	.button
+		margin: 15px
+
+.button 
+	display: inline-block
+	border: none
+	color: #fff //цвет текста в кнопке
+	text-decoration: none
+	background-color: $accent //Фон кнопки
+	padding: 10px 60px
+	font-size: 20px
+	//text-transform: uppercase //Делает шрифт Заглавным 
+	font-weight: 800
+	//letter-spacing: 3px //промежуток между буквами
+	border-radius: 2px // Загругление углов
+	text-align: center
+	position: relative 
+	outline: none // outline это оболочка border`а 
+	transition: background-color .1s ease //плавное появления фона кнопки
+	cursor: pointer // Задает курсор при наведении на объект, данном случае указательный палей 
+	&::after // для вывода желаемого объекта или текста после содержимого элемента, к которому он добавляется
+		transition: background-color .2s ease //плавное появления фона нижней черти кнопки 
+		position: absolute //позицируем относительно род-го класса position: relative
+		content: '' 
+		height: 4px // высота черточки 
+		bottom: 0 // position снизу притык к родителю
+		width: 100% // ширина
+		background-color: darken($accent, 50%) //С этим надо разобраться
+		opacity: .18
+		border-bottom-left-radius: 2px 
+		border-bottom-right-radius: 2px //загругление нижних углов
+		left: 0 //position слева притык к родителю	
+	&:focus, &:hover
+		text-decoration: none //Убрали нижнее подчеркивание
+		color: #fff	
+	&:hover
+		background-color: lighten($accent, 5%) //С этим надо разобраться
+		&::after
+			opacity: .22
+	&:active
+		background-color: darken($accent, 5%) //С этим надо разобраться
+		&::after
+			opacity: .32
+
+	&.button-gray
+		background-color: $gray //серая кнопка
+		&::after
+			background-color: darken($gray, 15%) //15% оттенка переменной darken к $gray
+		&:hover
+			background-color: lighten($gray, 3%) // При наведении
+			&::after
+				opacity: .22 //при наведении нижняя черта
+		&:active
+			background-color: darken($gray, 5%) //при нажатии
+			&::after
+				opacity: .40 //при нажатии нижняя черта
+/*-----------------------------------------------------------/Первая секция----------------------------------------------------*/
+
+
+/*-----------------------------------------------------------Вторая секция-----------------------------------------------------*/
+.portfolio-section
+	padding: 10px //паддинги вокруг portfolio-section
+	grid-template-columns: repeat(4, 1fr)
+	grid-gap: 10px //растояние между колонками (элементами)
+
+.portfolio-item
+	min-height: 32vh //задали минимальную высоту для любых экранов
+	background-position: center
+	background-size: cover
+	text-align: center
+	align-content: center // центруем по вертикали и по горизонтали
+	padding: $gutter
+	font-size: 20px
+	font-weight: bold
+	color: #fff
+	transition: color .5s ease
+	cursor: pointer
+	position: relative
+	&:hover
+		color: $accent
+		&::before
+			opacity: .85 //Сделали полупрозрачность меньше при наведении на элемент
+	&::before
+		content: ''
+		position: absolute
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		background-color: $dark
+		opacity: .65
+		transition: opacity .5s ease
+	> * // для любого потомка 
+		z-index: 1 // выводим контекст поверх всех объектов
+
+	&:nth-child(1) //Взяли первый элемент у .portfolio-section
+		grid-column: 1 / 3 // 1-й элемент занимает две колоночки (в общем 4 - 	grid-template-columns: repeat(4, 1fr))
+	&:nth-child(5)	
+		grid-column: 2 / 4
+	&:nth-child(6)	
+		grid-column: 4
+		grid-row: 2 / 4
+
+.buttoncase // оранжевая кнопка на прямую секцию портфолио
+	grid-column: 1 / 5 // выравнили по центру соотношению гридов
+	padding: $gutter $gutter 50px //Сделали отступы (Сверху, по бокам, и снизу)
+
+/*-----------------------------------------/Вторая секция----------------------------------------------*/
+
+
+
+/*-------------------------------------------Третья секция------------------------------------------*/
+.container
+	max-width: 1200px //Задаем тут мак.ширину
+	margin: auto //соотвественно чтоб с центрировался
+	padding: 0 $gutter //Сверху снизу 0 по бокам $gutter
+
+.landing-section //этот класс для основных настроек
+	padding: 80px 0 //паддинг сверху и снизу 80рх по бокам 0рх
+	h2
+		font-size: 34px	
+		font-weight: 800
+		color: $dark
+		line-height: 1.2
+
+.section-ready
+	background-color: $light //background 3й секции
+	.container
+		grid-template-columns: 1fr 1fr //Сделали 2 колонки
+
+.ready-left //левая колонка
+	border-right: 1px solid #dadada
+	font-size: 18px
+	padding: 
+		top: 60px
+		bottom: 60px
+		right: 60px
+	h2
+		margin-top: 0
+		margin-bottom: 40px
+
+.ready-right //правая колонка
+	padding-left: 40px
+/*----------------------------------------------/Третья секция-----------------------------------------------------*/
+
+
+/*----------------------------------------------Четвертая секция-----------------------------------------------------*/
+
+.formsection //Класс 4й секции
+	padding: 30px 0
+	background-color: $dark
+	input
+		background-color: lighten($dark, 6%)
+	form
+		grid-gap: $gutter
+		grid-template-columns: repeat(4, 1fr)
+	.button
+		font-size: 17px
+		padding: 14.5px
+		width: 100%
+
+input, textarea
+	border: none
+	padding: 15px 20px //паддинги поле текста
+	width: 100% //ширина полей
+	font-family: Arial, sans-serif
+	font-style: italic //стиль италик
+	outline: none //убрали оболочку поле ввода
+	transition: background-color .25s ease
+	&:focus
+		background-color: $light
+	&::placeholder
+		color: lighten($dark, 20%)
+
+/*----------------------------------------------Четвертая секция-----------------------------------------------------*/
+
+
+/*----------------------------------------------Пятая секция-----------------------------------------------------*/
+
+.section-blog
+	h2
+		margin:
+			top: 0
+			bottom: 50px
+	.buttoncase
+		padding-bottom: 0
+
+.blog-home
+	grid-gap: $gutter	
+	grid-template-columns: repeat(4, 1fr)
+
+.blog-item	
+	background-color: #F7F7F7
+	text-decoration: none
+	grid-template-rows: 1fr 1fr
+	transition: background-color .25s ease
+	overflow: hidden
+	color: #333
+	&:nth-child(3)
+		grid-column: 3/5
+	&:nth-child(4)
+		grid-column: 1/3
+	&:hover
+		background-color: $light
+		h4
+			color: $dark
+		.blog-item-img
+			transform: scale(1.1) translateY(-12px)
+
+	&-img
+		height: 270px
+		background-size: cover
+		background-position: center
+		transition: transform .25s ease
+	&-content
+		padding: 25px
+		text-align: center
+		align-content: center
+		h4
+			font-size: 18
+			color: #666
+			line-height: 1.3
+			margin: 0 
+			transition: color .25 ease
+		p
+			margin: 
+				top: 20px
+				bottom: 0
+
+/*----------------------------------------------Пятая секция-----------------------------------------------------*/
+
+/*----------------------------------------------Подвал-----------------------------------------------------*/
+
+.main-footer
+	padding: 60px 0
+	background-color: darken($dark, 8%)
+	text-align: center
+	color: #4E5355
+.footer-logo
+	font-family: intro-grid, sans-serif
+	font-size: 22px
+	line-height: 1.16
+	span
+		display: block
+		color: #707476
+		font-size: 26.5px
+
+.footer-copy
+	font-size: 20px
+	font-weight: bold
+	color: #494D50
+	margin-top: 20px
+		
+
+
+
+@import "media" // Всегда в конце
